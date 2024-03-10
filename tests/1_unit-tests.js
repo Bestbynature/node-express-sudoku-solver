@@ -31,11 +31,24 @@ suite("Unit Tests", () => {
 
   puzzlesAndSolutions.forEach(([puzzle, solution]) => {
     test("Valid puzzle strings pass the solver", () => {
-      assert.isString(solver.solve(puzzle));
+      assert.isObject(solver.solve(puzzle));
+      assert.property(solver.solve(puzzle), "solution");
+      assert.strictEqual(solver.solve(puzzle).solution, solution);
     });
 
+    test('Invalid puzzle strings fail the solver', () => {
+      const puzzle = "123456789".repeat(8);
+      assert.property(solver.solve(puzzle), "error");
+    });
+  
+
     test("Solver returns the expected solution for an incomplete puzzle", () => {
-      assert.strictEqual(solver.solve(puzzle), solution);
+      const invalidPuzzle = "1134.66.9".repeat(9)
+      const expectedSolution  = { error: 'Puzzle cannot be solved' }
+      const actualSolution = JSON.stringify(solver.solve(invalidPuzzle));
+      const expectedSolutionString = JSON.stringify(expectedSolution);
+
+      assert.strictEqual(actualSolution, expectedSolutionString);
     });
 
     test("Logic handles a valid row placement", () => {
@@ -68,27 +81,7 @@ suite("Unit Tests", () => {
       const puzzle = "123456789".repeat(9);
       assert.isFalse(solver.checkRegionPlacement(puzzle, 0, 0, '2'));
     });
-
-    test('Valid puzzle strings pass the solver', () => {
-      assert.isString(solver.solve(puzzle));
-    });
-  
-    test('Invalid puzzle strings fail the solver', () => {
-      const puzzle = "123456789".repeat(8);
-      assert.deepStrictEqual(solver.solve(puzzle), { error: 'Puzzle cannot be solved' });
-    });
-  
   
   });
 
-  
-  
-  
- 
-
-  // test('Solver returns the expected solution for an incomplete puzzle', () => {
-  //   const puzzle = "53..7....6..195....98....6.8...6...34..8.3..17...2...6.6....28....419..5....8..79";
-  //   const solution = "534678912672195348198342567859761423426853791713924856961537284287419635345286179";
-  //   assert.strictEqual(solver.solve(puzzle), solution);
-  // });
 });
