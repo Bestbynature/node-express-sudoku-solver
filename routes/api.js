@@ -65,7 +65,7 @@ module.exports = function (app) {
     .post((req, res) => {
       const { puzzle } = req.body;
 
-      if (!puzzle) {
+      if (!puzzle || puzzle.length < 0) {
         return res.json({ error: 'Required field missing' });
       }
 
@@ -76,7 +76,7 @@ module.exports = function (app) {
 
       const solvedPuzzle = solver.solve(puzzle);
 
-      if (!solvedPuzzle) {
+      if (!solvedPuzzle || solvedPuzzle === null || !solvedPuzzle.solution) {
         return res.json({ error: 'Puzzle cannot be solved' });
       }
 
