@@ -14,7 +14,7 @@ class SudokuSolver {
     const rowEnd = rowStart + 9;
 
     for (let i = rowStart; i < rowEnd; i++) {
-        if (puzzleString[i] === value) {
+        if (puzzleString[i] === String(value)) {
             return false;
         }
     }
