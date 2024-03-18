@@ -96,7 +96,7 @@ class SudokuSolver {
       return { error: 'Required field missing' };
     }
 
-    // Validate puzzleString
+    
     const validation = this.validate(puzzleString);
     if (validation !== true) {
       return validation;
@@ -130,12 +130,11 @@ class SudokuSolver {
         }
       }
 
-      return null; // No valid value found for this cell
+      return null;
     };
 
     const solvedPuzzle = solvePuzzle(puzzleString);
 
-    // Check if the puzzle is solvable
     if (solvedPuzzle === null) {
       return { error: 'Puzzle cannot be solved' };
     }
