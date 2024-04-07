@@ -80,6 +80,6 @@ module.exports = function (app) {
         return res.json({ error: 'Puzzle cannot be solved' });
       }
 
-      return res.json({ solution: solvedPuzzle });
+      return res.json({ solution: solvedPuzzle.solution });
     });
 };
